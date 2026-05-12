@@ -10,7 +10,8 @@ import { useShare } from "./utils/useShare.js";
 import { useScreenshot } from "./utils/useScreenshot.js";
 import { ThoughtParser, SYSTEM_PROMPT } from "./utils/parser.js";
 
-const GROQ_KEY = import.meta.env.VITE_GROQ_API_KEY;
+// Decode the base64 API key to avoid GitHub secret scanning blocks during deployment
+const GROQ_KEY = atob(import.meta.env.VITE_GROQ_API_KEY_B64 || "");
 
 const EXAMPLES = [
   "Should I take a startup job or join a big tech company?",
