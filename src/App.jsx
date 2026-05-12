@@ -10,8 +10,7 @@ import { useShare } from "./utils/useShare.js";
 import { useScreenshot } from "./utils/useScreenshot.js";
 import { ThoughtParser, SYSTEM_PROMPT } from "./utils/parser.js";
 
-// Decode the obfuscated base64 API key (reversed to bypass GitHub's ultra-smart secret scanning)
-const GROQ_KEY = atob((import.meta.env.VITE_GROQ_API_KEY_REVERSED || "").split("").reverse().join(""));
+const GROQ_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
 const EXAMPLES = [
   "Should I take a startup job or join a big tech company?",
