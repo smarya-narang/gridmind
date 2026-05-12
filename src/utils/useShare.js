@@ -23,14 +23,20 @@ export function encodeGraph(prompt, nodes, edges, answer) {
 
 export function decodeGraph(encoded) {
   try {
-    const payload = JSON.parse(decodeURIComponent(atob(encoded)));
+    // URLSearchParams.get() converts '+' to ' '. We must restore them.
+    let base64 = encoded.replace(/ /g, '+');
+    // Ensure padding is correct just in case it was stripped
+    while (base64.length % 4 !== 0) base64 += '=';
+    
+    const payload = JSON.parse(decodeURIComponent(atob(base64)));
     return {
       prompt: payload.p,
       nodes: payload.n.map(n => ({ id: n.i, label: n.l, type: n.t, index: 0 })),
       edges: payload.e.map(e => ({ source: e.s, target: e.t })),
       answer: payload.a,
     };
-  } catch {
+  } catch (e) {
+    console.error("Decode failed:", e);
     return null;
   }
 }
@@ -40,14 +46,17 @@ export function useShare() {
     const encoded = encodeGraph(prompt, nodes, edges, answer);
     if (!encoded) return { success: false, error: "Encoding failed" };
 
-    const url = `${window.location.origin}${window.location.pathname}?g=${encoded}`;
+    // We must encodeURIComponent so '+' and '=' are properly encoded
+    // and not misconstrued as spaces or param delimiters
+    const safeEncoded = encodeURIComponent(encoded);
+    const url = `${window.location.origin}${window.location.pathname}?g=${safeEncoded}`;
 
     try {
       await navigator.clipboard.writeText(url);
       return { success: true, url };
     } catch {
       // Fallback — update URL bar so user can copy manually
-      window.history.replaceState({}, "", `?g=${encoded}`);
+      window.history.replaceState({}, "", `?g=${safeEncoded}`);
       return { success: true, url, manual: true };
     }
   }
