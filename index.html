@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GridMind — Watch AI Think</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --bg: #050508;
+        --surface: #0d0d14;
+        --border: rgba(255,255,255,0.06);
+        --text: #e8e8f0;
+        --muted: rgba(232,232,240,0.4);
+        --accent: #00ff88;
+        --accent2: #7c3aed;
+        --accent3: #f59e0b;
+        --node-positive: #00ff88;
+        --node-neutral: #60a5fa;
+        --node-branch: #f59e0b;
+        --node-conclusion: #ff6b6b;
+        --font-display: 'Syne', sans-serif;
+        --font-mono: 'Space Mono', monospace;
+      }
+      html, body, #root {
+        height: 100%;
+        width: 100%;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-display);
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
